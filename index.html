@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create professional GST-compliant invoices and quotations easily with our free online GST document generators. Download as PDF or image.">
+  <meta name="keywords" content="GST Invoice, Invoice Generator, Tax Invoice, GST Bill, Indian Invoice, GST Quotation">
+  <meta name="author" content="Invoice Generator Tool">
+  <meta name="robots" content="index, follow">
+  <title>GST Document Generator</title>
+  <link rel="canonical" href="https://yourdomain.com/">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/inter-ui@3.19.3/inter.min.css" rel="stylesheet">
+  
+  <!-- Schema.org markup for Google -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "GST Document Generator",
+      "description": "Create professional GST-compliant invoices and quotations easily with our free online GST document generators.",
+      "url": "https://yourdomain.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://yourdomain.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+  
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #1e40af;
+      --accent-color: #3b82f6;
+      --success-color: #10b981;
+      --danger-color: #ef4444;
+      --light-color: #f9fafb;
+      --dark-color: #1f2937;
+      --gray-color: #4b5563;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #334155;
+      line-height: 1.5;
+    }
+    
+    .container {
+      max-width: 1200px;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .btn-secondary {
+      background-color: #fff;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      transition: all 0.3s;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #f0f7ff;
+    }
+    
+    .card {
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .section-title {
+      color: var(--primary-color);
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .section-title.text-center::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .feature-icon {
+      background-color: rgba(59, 130, 246, 0.1);
+      color: var(--primary-color);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+    }
+    
+    .testimonial-card {
+      background-color: white;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      margin: 12px;
+    }
+    
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      height: 100%;
+      background-color: white;
+      z-index: 50;
+      transition: right 0.3s ease-in-out;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .mobile-menu.active {
+      right: 0;
+    }
+    
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 49;
+      display: none;
+    }
+    
+    .menu-overlay.active {
+      display: block;
+    }
+    
+    /* FAQ Toggle */
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    
+    .faq-toggle.active .faq-content {
+      max-height: 1000px;
+    }
+    
+    .faq-toggle.active .toggle-icon-plus {
+      display: none;
+    }
+    
+    .faq-toggle:not(.active) .toggle-icon-minus {
+      display: none;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .section-title::after {
+        width: 40px;
+      }
+      
+      .testimonial-card {
+        margin: 8px 0;
+      }
+      
+      .hero-content {
+        padding: 3rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-10">
+    <div class="container mx-auto py-4 px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <a href="/" class="flex items-center">
+            <i class="fas fa-file-invoice text-primary-600 text-2xl mr-2 text-blue-600"></i>
+            <span class="text-xl font-bold text-gray-800">GST Jugaad</span>
+          </a>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex space-x-8">
+          <a href="#" class="text-gray-600 hover:text-blue-600 transition">Home</a>
+          <a href="#features" class="text-gray-600 hover:text-blue-600 transition">Features</a>
+          <a href="#testimonials" class="text-gray-600 hover:text-blue-600 transition">Testimonials</a>
+          <a href="#faq" class="text-gray-600 hover:text-blue-600 transition">FAQ</a>
+          <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Contact</a>
+        </nav>
+        
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="p-4 border-b">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <i class="fas fa-file-invoice text-primary-600 text-2xl mr-2 text-blue-600"></i>
+          <span class="text-xl font-bold text-gray-800">GST Doc Generator</span>
+        </div>
+        <button id="close-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+    </div>
+    <nav class="p-4">
+      <ul class="space-y-4">
+        <li><a href="/" class="block py-2 text-gray-600 hover:text-blue-600 transition">Home</a></li>
+        <li><a href="#features" class="block py-2 text-gray-600 hover:text-blue-600 transition">Features</a></li>
+        <li><a href="#testimonials" class="block py-2 text-gray-600 hover:text-blue-600 transition">Testimonials</a></li>
+        <li><a href="#faq" class="block py-2 text-gray-600 hover:text-blue-600 transition">FAQ</a></li>
+        <li><a href="#contact" class="block py-2 text-gray-600 hover:text-blue-600 transition">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  
+  <!-- Menu Overlay -->
+  <div class="menu-overlay" id="menu-overlay"></div>
+  
+  <!-- Hero Section -->
+  <section class="relative">
+    <div class="hero-content bg-gradient-to-r from-blue-500 to-blue-700 text-white py-16 sm:py-24">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Professional GST Documents Made Simple</h1>
+            <p class="text-lg sm:text-xl mb-8 text-blue-100">Create, customize and download GST-compliant invoices and quotations in minutes. Free, secure, and no sign-up required.</p>
+            <div class="flex flex-wrap gap-4">
+              <a href="#document-generators" class="btn-primary px-8 py-3 rounded-lg font-medium text-lg shadow-lg hover:shadow-xl">Get Started</a>
+              <a href="#features" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium text-lg shadow-lg hover:shadow-xl">Learn More</a>
+            </div>
+          </div>
+          <div class="flex justify-center">
+            <div class="w-full max-w-md bg-white p-2 rounded-lg shadow-xl">
+              <div class="bg-blue-50 p-6 rounded">
+                <div class="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 class="text-lg font-bold text-gray-800">TAX INVOICE</h3>
+                    <p class="text-gray-600 text-sm">ABC Technologies Pvt Ltd</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm text-gray-600">Invoice #: INV-2023-001</p>
+                    <p class="text-sm text-gray-600">Date: 15-05-2023</p>
+                  </div>
+                </div>
+                <div class="border-t border-gray-200 my-4"></div>
+                <div class="flex justify-between text-gray-800 mb-2">
+                  <span>Subtotal:</span>
+                  <span>₹55,000.00</span>
+                </div>
+                <div class="flex justify-between text-gray-800 mb-2">
+                  <span>GST (18%):</span>
+                  <span>₹9,900.00</span>
+                </div>
+                <div class="flex justify-between font-bold pt-2 border-t border-gray-200">
+                  <span>Total:</span>
+                  <span class="text-blue-600">₹64,900.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Wave Separator -->
+    <div class="w-full overflow-hidden leading-none">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="bg-blue-700">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" 
+              fill="#f8fafc"></path>
+      </svg>
+    </div>
+  </section>
+  
+  <!-- Document Generators Section -->
+  <section id="document-generators" class="py-16 sm:py-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold section-title text-center mb-4">Choose Your Document Type</h2>
+        <p class="text-xl text-gray-600 mt-8 max-w-3xl mx-auto">Select the document generator that best fits your business needs. Both tools are compliant with GST regulations in India.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <!-- Invoice Generator Card -->
+        <div class="card bg-white p-6 sm:p-8">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+              <i class="fas fa-file-invoice text-blue-600 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold">GST Invoice Generator</h3>
+          </div>
+          
+          <p class="text-gray-600 mb-6">Create professional tax invoices for your business. Add your company details, customer information, and itemized billing with automatic tax calculations.</p>
+          
+          <ul class="mb-8 space-y-3">
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+              <span>GST-compliant tax invoice generation</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+              <span>CGST, SGST & IGST support</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+              <span>Download as PDF or Image</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+              <span>Professional customizable design</span>
+            </li>
+          </ul>
+          
+          <a href="gst-invoice-generator.html" class="btn-primary inline-block w-full text-center py-3 rounded-lg font-medium">
+            Create Invoice <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+        
+        <!-- Quotation Generator Card -->
+        <div class="card bg-white p-6 sm:p-8">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+              <i class="fas fa-file-alt text-blue-600 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold">GST Quotation Generator</h3>
+          </div>
+          
+          <p class="text-gray-600 mb-6">Generate professional quotations with GST details. Perfect for providing estimates to your prospects before creating a formal invoice.</p>
+          
+          <ul class="mb-8 space-y-3">
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+              <span>Professional quotation templates</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+              <span>Automatic tax calculation</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+              <span>Add terms and conditions</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+              <span>Convert to invoice with one click</span>
+            </li>
+          </ul>
+          
+          <a href="gst-quotation-generator.html" class="btn-primary inline-block w-full text-center py-3 rounded-lg font-medium">
+            Create Quotation <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Features Section -->
+  <section id="features" class="py-16 sm:py-24 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold section-title text-center mb-4">Powerful Features</h2>
+        <p class="text-xl text-gray-600 mt-8 max-w-3xl mx-auto">Our GST document generators are packed with features to make your business documentation process simple and efficient.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="feature-icon mb-4">
+            <i class="fas fa-shield-alt text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">GST Compliant</h3>
+          <p class="text-gray-600">Generate documents that comply with Indian GST regulations with proper tax calculations and required fields.</p>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="feature-icon mb-4">
+            <i class="fas fa-download text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Easy Export</h3>
+          <p class="text-gray-600">Download your documents as PDF or image files for easy sharing with clients or for your records.</p>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="feature-icon mb-4">
+            <i class="fas fa-lock text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Secure & Private</h3>
+          <p class="text-gray-600">Your data remains on your device. We don't store your business or client information on our servers.</p>
+        </div>
+        
+        <!-- Feature 4 -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="feature-icon mb-4">
+            <i class="fas fa-paint-brush text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Customizable</h3>
+          <p class="text-gray-600">Add your logo, customize payment terms, and personalize your documents to match your brand identity.</p>
+        </div>
+        
+        <!-- Feature 5 -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="feature-icon mb-4">
+            <i class="fas fa-calculator text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Automatic Calculations</h3>
+          <p class="text-gray-600">Let our tool handle tax calculations, subtotals, and final amounts with precision and accuracy.</p>
+        </div>
+        
+        <!-- Feature 6 -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="feature-icon mb-4">
+            <i class="fas fa-mobile-alt text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Mobile Friendly</h3>
+          <p class="text-gray-600">Create professional documents on the go from any device - desktop, tablet, or smartphone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- How It Works -->
+  <section class="py-16 sm:py-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold section-title text-center mb-4">How It Works</h2>
+        <p class="text-xl text-gray-600 mt-8 max-w-3xl mx-auto">Creating professional GST documents is just a few simple steps away.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- Step 1 -->
+        <div class="text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-blue-600 text-2xl font-bold">1</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Choose Document Type</h3>
+          <p class="text-gray-600">Select whether you need to create an invoice or a quotation based on your business needs.</p>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-blue-600 text-2xl font-bold">2</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Fill in Details</h3>
+          <p class="text-gray-600">Enter your business information, client details, and itemized list with prices and tax rates.</p>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-blue-600 text-2xl font-bold">3</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Download & Share</h3>
+          <p class="text-gray-600">Preview your document, download it as PDF or image, and share it with your clients.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Testimonials -->
+  <section id="testimonials" class="py-16 sm:py-24 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold section-title text-center mb-4">What Our Users Say</h2>
+        <p class="text-xl text-gray-600 mt-8 max-w-3xl mx-auto">Thousands of businesses trust our GST document generators for their invoicing and quotation needs.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 mr-2">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <span class="text-gray-600">5.0</span>
+          </div>
+          <p class="text-gray-600 mb-4">"This invoice generator has saved me countless hours. The GST calculations are always accurate, and my clients are impressed with the professional look."</p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-semibold">RK</span>
+            </div>
+            <div>
+              <h4 class="font-semibold">Rajesh Kumar</h4>
+              <p class="text-sm text-gray-500">Freelance Developer</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 mr-2">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <span class="text-gray-600">5.0</span>
+          </div>
+          <p class="text-gray-600 mb-4">"Being able to create both quotes and invoices with the same formatting has streamlined our sales process. The fact that it's free and doesn't store our data is a huge plus."</p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-semibold">SP</span>
+            </div>
+            <div>
+              <h4 class="font-semibold">Sunita Patel</h4>
+              <p class="text-sm text-gray-500">Small Business Owner</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 mr-2">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <span class="text-gray-600">4.5</span>
+          </div>
+          <p class="text-gray-600 mb-4">"As an accountant, I recommend this tool to all my clients. It's simple to use, GST-compliant, and the PDF export makes record-keeping easy."</p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-semibold">AM</span>
+            </div>
+            <div>
+              <h4 class="font-semibold">Amit Mishra</h4>
+              <p class="text-sm text-gray-500">Chartered Accountant</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 sm:py-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold section-title text-center mb-4">Frequently Asked Questions</h2>
+        <p class="text-xl text-gray-600 mt-8 max-w-3xl mx-auto">Find answers to common questions about our GST document generators.</p>
+      </div>
+      
+      <div class="max-w-3xl mx-auto">
+        <!-- FAQ 1 -->
+        <div class="mb-6 border-b border-gray-200 pb-6 faq-toggle">
+          <button class="flex justify-between items-center w-full text-left font-semibold text-lg text-gray-800 focus:outline-none">
+            <span>Is this tool completely free to use?</span>
+            <i class="fas fa-plus toggle-icon-plus transition-transform"></i>
+            <i class="fas fa-minus toggle-icon-minus transition-transform"></i>
+          </button>
+          <div class="faq-content pt-4 text-gray-600">
+            <p>Yes, our GST Invoice and Quotation Generator is completely free to use. There are no hidden charges, subscription fees, or limitations on the number of documents you can create.</p>
+          </div>
+        </div>
+        
+        <!-- FAQ 2 -->
+        <div class="mb-6 border-b border-gray-200 pb-6 faq-toggle">
+          <button class="flex justify-between items-center w-full text-left font-semibold text-lg text-gray-800 focus:outline-none">
+            <span>Is my data secure when using this tool?</span>
+            <i class="fas fa-plus toggle-icon-plus transition-transform"></i>
+            <i class="fas fa-minus toggle-icon-minus transition-transform"></i>
+          </button>
+          <div class="faq-content pt-4 text-gray-600">
+            <p>Absolutely! We prioritize your privacy and security. All of your data remains on your device - we don't store your business or client information on our servers. The document generation happens entirely within your browser.</p>
+          </div>
+        </div>
+        
+        <!-- FAQ 3 -->
+        <div class="mb-6 border-b border-gray-200 pb-6 faq-toggle">
+          <button class="flex justify-between items-center w-full text-left font-semibold text-lg text-gray-800 focus:outline-none">
+            <span>Are the documents GST compliant?</span>
+            <i class="fas fa-plus toggle-icon-plus transition-transform"></i>
+            <i class="fas fa-minus toggle-icon-minus transition-transform"></i>
+          </button>
+          <div class="faq-content pt-4 text-gray-600">
+            <p>Yes, all documents created with our tools are fully compliant with Indian GST regulations. They include proper GSTIN fields, HSN/SAC codes, and correct tax calculations for CGST, SGST, and IGST as applicable.</p>
+          </div>
+        </div>
+        
+        <!-- FAQ 4 -->
+        <div class="mb-6 border-b border-gray-200 pb-6 faq-toggle">
+          <button class="flex justify-between items-center w-full text-left font-semibold text-lg text-gray-800 focus:outline-none">
+            <span>Can I customize the appearance of my invoices and quotations?</span>
+            <i class="fas fa-plus toggle-icon-plus transition-transform"></i>
+            <i class="fas fa-minus toggle-icon-minus transition-transform"></i>
+          </button>
+          <div class="faq-content pt-4 text-gray-600">
+            <p>Yes, you can customize your documents by adding your company logo, changing payment terms, and including additional notes or terms and conditions. The professional design can be tailored to match your brand identity.</p>
+          </div>
+        </div>
+        
+        <!-- FAQ 5 -->
+        <div class="mb-6 border-b border-gray-200 pb-6 faq-toggle">
+          <button class="flex justify-between items-center w-full text-left font-semibold text-lg text-gray-800 focus:outline-none">
+            <span>Can I use this on my mobile phone or tablet?</span>
+            <i class="fas fa-plus toggle-icon-plus transition-transform"></i>
+            <i class="fas fa-minus toggle-icon-minus transition-transform"></i>
+          </button>
+          <div class="faq-content pt-4 text-gray-600">
+            <p>Yes, our GST document generators are fully responsive and work on all devices including smartphones, tablets, laptops, and desktop computers. Create professional documents wherever you are.</p>
+          </div>
+        </div>
+        
+        <!-- FAQ 6 -->
+        <div class="mb-6 faq-toggle">
+          <button class="flex justify-between items-center w-full text-left font-semibold text-lg text-gray-800 focus:outline-none">
+            <span>How can I save or share the generated documents?</span>
+            <i class="fas fa-plus toggle-icon-plus transition-transform"></i>
+            <i class="fas fa-minus toggle-icon-minus transition-transform"></i>
+          </button>
+          <div class="faq-content pt-4 text-gray-600">
+            <p>After generating your document, you can download it as a PDF file or save it as an image. These formats make it easy to share via email, messaging apps, or print for physical copies. All downloads are stored locally on your device.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="py-16 sm:py-24 bg-gradient-to-r from-blue-500 to-blue-700 text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6">Ready to Create Professional GST Documents?</h2>
+      <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">Start generating GST-compliant invoices and quotations in minutes. No registration required.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="gst-invoice-generator.html" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium text-lg shadow-lg hover:shadow-xl">
+          Create Invoice <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+        <a href="gst-quotation-generator.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium text-lg shadow-lg hover:shadow-xl hover:bg-white hover:text-blue-600 transition">
+          Create Quotation <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact Section -->
+  <section id="contact" class="py-16 sm:py-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold section-title text-center mb-4">Contact Us</h2>
+        <p class="text-xl text-gray-600 mt-8 max-w-3xl mx-auto">Have questions or suggestions? We'd love to hear from you.</p>
+      </div>
+      
+      <div class="max-w-3xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Get in Touch</h3>
+            <p class="text-gray-600 mb-6">Feel free to reach out with any questions, suggestions, or feedback about our GST document generators.</p>
+            
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <i class="fas fa-envelope text-blue-600 mt-1 mr-3"></i>
+                <div>
+                  <h4 class="font-semibold">Email Us</h4>
+                  <p class="text-gray-600">support@gstdocgenerator.com</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <i class="fas fa-phone-alt text-blue-600 mt-1 mr-3"></i>
+                <div>
+                  <h4 class="font-semibold">Call Us</h4>
+                  <p class="text-gray-600">+91 98765 43210</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <i class="fas fa-map-marker-alt text-blue-600 mt-1 mr-3"></i>
+                <div>
+                  <h4 class="font-semibold">Office</h4>
+                  <p class="text-gray-600">123 Business Park, Andheri East<br>Mumbai, Maharashtra 400069</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Send a Message</h3>
+            <form>
+              <div class="mb-4">
+                <label for="name" class="block text-gray-700 mb-2">Your Name</label>
+                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="Enter your name">
+              </div>
+              
+              <div class="mb-4">
+                <label for="email" class="block text-gray-700 mb-2">Email Address</label>
+                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="Enter your email">
+              </div>
+              
+              <div class="mb-4">
+                <label for="message" class="block text-gray-700 mb-2">Message</label>
+                <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="Type your message here"></textarea>
+              </div>
+              
+              <button type="submit" class="btn-primary px-6 py-2 rounded-lg font-medium">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="col-span-1 md:col-span-2">
+          <div class="flex items-center mb-4">
+            <i class="fas fa-file-invoice text-blue-400 text-2xl mr-2"></i>
+            <span class="text-xl font-bold">GST Doc Generator</span>
+          </div>
+          <p class="text-gray-400 mb-4">Create professional GST-compliant invoices and quotations in minutes. Free, secure, and no sign-up required.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+            <li><a href="#features" class="text-gray-400 hover:text-white transition">Features</a></li>
+            <li><a href="#testimonials" class="text-gray-400 hover:text-white transition">Testimonials</a></li>
+            <li><a href="#faq" class="text-gray-400 hover:text-white transition">FAQ</a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Our Tools</h3>
+          <ul class="space-y-2">
+            <li><a href="gst-invoice-generator.html" class="text-gray-400 hover:text-white transition">Invoice Generator</a></li>
+            <li><a href="gst-quotation-generator.html" class="text-gray-400 hover:text-white transition">Quotation Generator</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+        <p>© <span id="current-year"></span> GST Document Generator. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update copyright year
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      
+      // Mobile Menu Toggle
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const closeMenuButton = document.getElementById('close-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuOverlay = document.getElementById('menu-overlay');
+      
+      mobileMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.add('active');
+        menuOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+      
+      closeMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+      
+      menuOverlay.addEventListener('click', function() {
+        mobileMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+      
+      // Mobile menu links
+      const mobileLinks = document.querySelectorAll('#mobile-menu a');
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          menuOverlay.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+      
+      // FAQ Toggles
+      const faqToggles = document.querySelectorAll('.faq-toggle');
+      faqToggles.forEach(toggle => {
+        const button = toggle.querySelector('button');
+        button.addEventListener('click', function() {
+          toggle.classList.toggle('active');
+        });
+      });
+      
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          if (this.getAttribute('href') === '#') return;
+          
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            const headerOffset = 80;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

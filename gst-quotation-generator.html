@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<a href="index.html">
+    	<button>Home</button>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create professional business quotations easily with our free online Quotation Generator. Download as PDF or convert to invoice.">
+  <meta name="keywords" content="Quotation Generator, Business Quotation, Price Quote, Estimate Generator">
+  <meta name="author" content="Quotation Generator Tool">
+  <meta name="robots" content="index, follow">
+  <title>Professional Quotation Generator | Create Business Quotes</title>
+  <link rel="canonical" href="https://yourdomain.com/quotation-generator">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/inter-ui@3.19.3/inter.min.css" rel="stylesheet">
+  
+  <!-- Schema.org markup for Google -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Quotation Generator",
+      "description": "Create professional business quotations easily with our free online Quotation Generator.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      }
+    }
+  </script>
+  
+  <style>
+    :root {
+      --primary-color: #3b82f6;
+      --secondary-color: #2563eb;
+      --accent-color: #60a5fa;
+      --success-color: #10b981;
+      --danger-color: #ef4444;
+      --light-color: #f9fafb;
+      --dark-color: #1f2937;
+      --gray-color: #4b5563;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #334155;
+      line-height: 1.5;
+    }
+    
+    .container {
+      max-width: 1200px;
+    }
+    
+    .quote-box {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .form-title {
+      color: var(--primary-color);
+      position: relative;
+    }
+    
+    .form-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .tab-active {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .btn-success {
+      background-color: var(--success-color);
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .btn-success:hover {
+      background-color: #0ca678;
+    }
+    
+    .btn-danger {
+      background-color: var(--danger-color);
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .btn-danger:hover {
+      background-color: #dc2626;
+    }
+    
+    .btn-secondary {
+      background-color: #6B7280;
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #4B5563;
+    }
+    
+    .quote-preview {
+      background-color: white;
+    }
+    
+    .quote-table th {
+      background-color: #f1f5f9;
+      color: #334155;
+      font-weight: 600;
+      text-align: left;
+    }
+    
+    .quote-table td, .quote-table th {
+      padding: 12px 15px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .total-section {
+      background-color: #f8fafc;
+      border-radius: 6px;
+    }
+    
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+    
+    .file-input-wrapper input[type=file] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    
+    .logo-preview {
+      width: 120px;
+      height: 80px;
+      border: 1px dashed #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8fafc;
+      overflow: hidden;
+    }
+    
+    .logo-preview img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    .form-input, .form-select, .form-textarea {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10px 12px;
+      transition: all 0.3s;
+      width: 100%;
+    }
+    
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      outline: none;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #4b5563;
+    }
+    
+    .payment-method-toggle {
+      display: flex;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    
+    .payment-method-option {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .payment-method-option.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .payment-method-option:first-child {
+      border-right: 1px solid #e2e8f0;
+    }
+    
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      border-radius: 4px;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 9999;
+    }
+
+    .toast.success {
+      background-color: var(--success-color);
+    }
+
+    .toast.error {
+      background-color: var(--danger-color);
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    /* Improved responsiveness */
+    @media (max-width: 767px) {
+      .quote-box {
+        padding: 16px !important;
+      }
+      
+      .form-title::after {
+        width: 40px;
+      }
+      
+      .quote-table {
+        font-size: 0.875rem;
+      }
+      
+      .quote-table th, .quote-table td {
+        padding: 8px;
+      }
+      
+      .btn-group {
+        flex-direction: column;
+      }
+      
+      .btn-group .btn {
+        margin-bottom: 8px;
+        width: 100%;
+      }
+      
+      .tab-link {
+        padding: 8px 12px !important;
+        font-size: 0.875rem !important;
+      }
+      
+      .item-row td {
+        padding: 8px 4px;
+      }
+      
+      .item-field {
+        padding: 6px 8px;
+        font-size: 0.875rem;
+      }
+      
+      .form-title {
+        font-size: 1.25rem !important;
+      }
+    }
+    
+    /* Tablet improvements */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .quote-box {
+        padding: 24px !important;
+      }
+      
+      .tab-link {
+        padding: 12px 16px !important;
+      }
+    }
+    
+    @media print {
+      body {
+        background-color: white;
+      }
+      
+      .quote-box {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .no-print {
+        display: none;
+      }
+    }
+    
+    /* Quotation-specific styles */
+    .quote-validity {
+      padding: 6px 12px;
+      background-color: #eff6ff;
+      border-radius: 4px;
+      color: #1e40af;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 500;
+    }
+    
+    .quote-validity i {
+      margin-right: 8px;
+    }
+    
+    .acceptance-section {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 16px;
+    }
+    
+    .acceptance-section h3 {
+      margin-top: 0;
+    }
+    
+    .signature-line {
+      border-top: 1px solid #334155;
+      width: 200px;
+      margin-top: 60px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="container mx-auto py-4 sm:py-8 px-4">
+    <div class="quote-box p-4 sm:p-8">
+      <!-- Header -->
+      <div class="mb-6 sm:mb-10 text-center">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Professional Quotation Generator</h1>
+        <p class="text-gray-600 mt-2">Create, customize, and export business quotations with ease</p>
+      </div>
+      
+      <!-- Toast notification -->
+      <div id="toast-notification" class="toast"></div>
+      
+      <!-- Tabs -->
+      <div class="border-b border-gray-200 mb-6 sm:mb-8 no-print overflow-x-auto">
+        <ul class="flex flex-nowrap -mb-px" id="quote-tabs">
+          <li class="mr-2">
+            <a href="#" class="inline-block py-2 sm:py-4 px-2 sm:px-4 text-sm font-medium tab-link tab-active whitespace-nowrap" data-tab="details">Quotation Details</a>
+          </li>
+          <li class="mr-2">
+            <a href="#" class="inline-block py-2 sm:py-4 px-2 sm:px-4 text-sm font-medium tab-link whitespace-nowrap" data-tab="items">Items & Pricing</a>
+          </li>
+          <li class="mr-2">
+            <a href="#" class="inline-block py-2 sm:py-4 px-2 sm:px-4 text-sm font-medium tab-link whitespace-nowrap" data-tab="preview">Preview Quotation</a>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Details Tab -->
+      <div id="details-tab" class="tab-content active no-print">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <h2 class="text-xl font-semibold form-title mb-6">Quotation Information</h2>
+            
+            <div class="mb-6">
+              <label for="companyLogo" class="form-label">Company Logo</label>
+              <div class="flex items-center space-x-4">
+                <div class="logo-preview" id="logoPreviewContainer">
+                  <span class="text-gray-400 text-sm">No logo uploaded</span>
+                </div>
+                <div class="file-input-wrapper">
+                  <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded border border-gray-300 hover:bg-gray-200 transition">
+                    <i class="fas fa-upload mr-2"></i> Upload Logo
+                  </button>
+                  <input type="file" id="companyLogo" accept="image/*">
+                </div>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label for="quoteNumber" class="form-label">Quotation Number</label>
+                <input type="text" id="quoteNumber" class="form-input" placeholder="QT-2023-001">
+              </div>
+              <div>
+                <label for="quoteDate" class="form-label">Quotation Date</label>
+                <input type="date" id="quoteDate" class="form-input">
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label for="validityPeriod" class="form-label">Validity Period</label>
+                <select id="validityPeriod" class="form-select">
+                  <option value="15 days">15 days</option>
+                  <option value="30 days" selected>30 days</option>
+                  <option value="45 days">45 days</option>
+                  <option value="60 days">60 days</option>
+                  <option value="90 days">90 days</option>
+                </select>
+              </div>
+              <div>
+                <label for="expiryDate" class="form-label">Valid Until</label>
+                <input type="date" id="expiryDate" class="form-input">
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label for="projectTitle" class="form-label">Project/Service Title</label>
+              <input type="text" id="projectTitle" class="form-input" placeholder="Website Development Services">
+            </div>
+          </div>
+          
+          <div>
+            <h2 class="text-xl font-semibold form-title mb-6">Payment Details</h2>
+            
+            <div class="mb-4">
+              <label class="form-label">Payment Method</label>
+              <div class="payment-method-toggle mb-4">
+                <div class="payment-method-option active" data-method="bank">
+                  <i class="fas fa-university mr-2"></i> Bank Transfer
+                </div>
+                <div class="payment-method-option" data-method="upi">
+                  <i class="fas fa-mobile-alt mr-2"></i> UPI Payment
+                </div>
+              </div>
+            </div>
+            
+            <div id="bank-details-section">
+              <div class="mb-4">
+                <label for="bankName" class="form-label">Bank Name</label>
+                <input type="text" id="bankName" class="form-input" placeholder="State Bank of India">
+              </div>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label for="accountNumber" class="form-label">Account Number</label>
+                  <input type="text" id="accountNumber" class="form-input" placeholder="123456789012">
+                </div>
+                <div>
+                  <label for="ifscCode" class="form-label">IFSC Code</label>
+                  <input type="text" id="ifscCode" class="form-input" placeholder="SBIN0000000">
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <label for="accountName" class="form-label">Account Holder Name</label>
+                <input type="text" id="accountName" class="form-input" placeholder="Your Company Name">
+              </div>
+              
+              <div class="mb-4">
+                <label for="branchName" class="form-label">Branch Name</label>
+                <input type="text" id="branchName" class="form-input" placeholder="Branch Location">
+              </div>
+            </div>
+            
+            <div id="upi-details-section" class="hidden">
+              <div class="mb-4">
+                <label for="upiId" class="form-label">UPI ID</label>
+                <input type="text" id="upiId" class="form-input" placeholder="yourname@upi">
+              </div>
+              
+              <div class="mb-4">
+                <label for="upiName" class="form-label">UPI Account Name</label>
+                <input type="text" id="upiName" class="form-input" placeholder="Your Name/Business Name">
+              </div>
+              
+              <div class="mb-4 text-center">
+                <label class="form-label">QR Code (optional)</label>
+                <div class="border border-dashed border-gray-300 rounded p-4 flex items-center justify-center" style="height: 160px;" id="upiQrContainer">
+                  <div class="text-center text-gray-500">
+                    <i class="fas fa-qrcode text-4xl mb-2"></i>
+                    <p class="text-sm">QR code will appear here when you upload</p>
+                    <div class="file-input-wrapper mt-2">
+                      <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded border border-gray-300 hover:bg-gray-200 transition text-sm">
+                        Upload QR
+                      </button>
+                      <input type="file" id="upiQrCode" accept="image/*">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <h2 class="text-xl font-semibold form-title mb-6">Seller Details</h2>
+            
+            <div class="mb-4">
+              <label for="sellerName" class="form-label">Company Name</label>
+              <input type="text" id="sellerName" class="form-input" placeholder="Your Company Name">
+            </div>
+            
+            <div class="mb-4">
+              <label for="sellerGSTIN" class="form-label">GSTIN (optional)</label>
+              <input type="text" id="sellerGSTIN" class="form-input" placeholder="22AAAAA0000A1Z5">
+            </div>
+            
+            <div class="mb-4">
+              <label for="sellerAddress" class="form-label">Company Address</label>
+              <textarea id="sellerAddress" class="form-textarea" rows="3" placeholder="Full address with pincode"></textarea>
+            </div>
+            
+            <div class="mb-4">
+              <label for="sellerContact" class="form-label">Contact Information</label>
+              <textarea id="sellerContact" class="form-textarea" rows="2" placeholder="Phone, email, website"></textarea>
+            </div>
+          </div>
+          
+          <div>
+            <h2 class="text-xl font-semibold form-title mb-6">Client Details</h2>
+            
+            <div class="mb-4">
+              <label for="clientName" class="form-label">Client/Company Name</label>
+              <input type="text" id="clientName" class="form-input" placeholder="Client Name">
+            </div>
+            
+            <div class="mb-4">
+              <label for="clientGSTIN" class="form-label">GSTIN (if applicable)</label>
+              <input type="text" id="clientGSTIN" class="form-input" placeholder="22BBBBB0000B1Z5">
+            </div>
+            
+            <div class="mb-4">
+              <label for="clientAddress" class="form-label">Client Address</label>
+              <textarea id="clientAddress" class="form-textarea" rows="3" placeholder="Full address with pincode"></textarea>
+            </div>
+            
+            <div class="mb-4">
+              <label for="clientContact" class="form-label">Contact Information</label>
+              <textarea id="clientContact" class="form-textarea" rows="2" placeholder="Phone, email"></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <h2 class="text-xl font-semibold form-title mb-6">Project Details</h2>
+            
+            <div class="mb-4">
+              <label for="projectScope" class="form-label">Project Scope</label>
+              <textarea id="projectScope" class="form-textarea" rows="4" placeholder="Describe the scope of the project or service being offered"></textarea>
+            </div>
+            
+            <div class="mb-4">
+              <label for="deliveryTimeline" class="form-label">Estimated Delivery Timeline</label>
+              <input type="text" id="deliveryTimeline" class="form-input" placeholder="e.g., 2-3 weeks, 30 days, etc.">
+            </div>
+          </div>
+          
+          <div>
+            <h2 class="text-xl font-semibold form-title mb-6">Terms & Conditions</h2>
+            
+            <div class="mb-4">
+              <label for="paymentTerms" class="form-label">Payment Terms</label>
+              <select id="paymentTerms" class="form-select">
+                <option value="50% advance, 50% upon completion">50% advance, 50% upon completion</option>
+                <option value="30% advance, 70% upon completion">30% advance, 70% upon completion</option>
+                <option value="100% advance payment">100% advance payment</option>
+                <option value="Due on acceptance">Due on acceptance</option>
+                <option value="Custom">Custom</option>
+              </select>
+            </div>
+            
+            <div id="customPaymentTerms" class="mb-4 hidden">
+              <label for="customTermsText" class="form-label">Custom Payment Terms</label>
+              <textarea id="customTermsText" class="form-textarea" rows="2" placeholder="Enter custom payment terms"></textarea>
+            </div>
+            
+            <div class="mb-4">
+              <label for="termsConditions" class="form-label">Additional Terms & Conditions</label>
+              <textarea id="termsConditions" class="form-textarea" rows="5" placeholder="Enter your terms and conditions for this quotation"></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-right mt-8">
+          <button class="btn-primary px-6 py-2 rounded font-medium next-tab" data-next="items">
+            Continue to Items <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Items Tab -->
+      <div id="items-tab" class="tab-content no-print">
+        <h2 class="text-xl font-semibold form-title mb-6">Quotation Items</h2>
+        
+        <div class="overflow-x-auto mb-6">
+          <table class="w-full" id="items-table">
+            <thead>
+              <tr class="bg-gray-50">
+                <th class="py-3 px-2 sm:px-4 text-left">#</th>
+                <th class="py-3 px-2 sm:px-4 text-left">Description</th>
+                <th class="py-3 px-2 sm:px-4 text-left">HSN/SAC</th>
+                <th class="py-3 px-2 sm:px-4 text-left">Tax Type</th>
+                <th class="py-3 px-2 sm:px-4 text-left">Quantity</th>
+                <th class="py-3 px-2 sm:px-4 text-left">Rate (₹)</th>
+                <th class="py-3 px-2 sm:px-4 text-left">Amount (₹)</th>
+                <th class="py-3 px-2 sm:px-4 text-left">Action</th>
+              </tr>
+            </thead>
+            <tbody id="item-rows">
+              <!-- Items will be added here -->
+            </tbody>
+          </table>
+        </div>
+        
+        <button class="mb-8 flex items-center px-4 py-2 bg-blue-50 text-blue-600 rounded border border-blue-200 hover:bg-blue-100 transition" id="add-item-btn">
+          <i class="fas fa-plus mr-2"></i> Add New Item
+        </button>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div>
+            <h3 class="text-lg font-medium mb-4">Tax Rates Configuration</h3>
+            
+            <div class="mb-4">
+              <label for="showTaxFields" class="flex items-center">
+                <input type="checkbox" id="showTaxFields" class="mr-2" checked>
+                <span>Show Tax Fields</span>
+              </label>
+            </div>
+            
+            <div id="taxRatesContainer" class="grid grid-cols-1 gap-4">
+              <div>
+                <label for="cgstRate" class="form-label">CGST Rate (%)</label>
+                <input type="number" id="cgstRate" class="form-input" value="9" min="0" max="100" step="0.01">
+              </div>
+              <div>
+                <label for="sgstRate" class="form-label">SGST Rate (%)</label>
+                <input type="number" id="sgstRate" class="form-input" value="9" min="0" max="100" step="0.01">
+              </div>
+              <div>
+                <label for="igstRate" class="form-label">IGST Rate (%)</label>
+                <input type="number" id="igstRate" class="form-input" value="18" min="0" max="100" step="0.01">
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-medium mb-4">Discount</h3>
+            
+            <div class="mb-4">
+              <label for="discountType" class="form-label">Discount Type</label>
+              <select id="discountType" class="form-select">
+                <option value="percentage">Percentage Discount (%)</option>
+                <option value="fixed">Fixed Amount (₹)</option>
+              </select>
+            </div>
+            
+            <div class="mb-4">
+              <label for="discountValue" class="form-label">Discount Value</label>
+              <input type="number" id="discountValue" class="form-input" placeholder="0" min="0" step="0.01">
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-medium mb-4">Other Settings</h3>
+            
+            <div class="mb-4">
+              <label for="currency" class="form-label">Currency</label>
+              <select id="currency" class="form-select">
+                <option value="INR" selected>Indian Rupee (₹)</option>
+                <option value="USD">US Dollar ($)</option>
+                <option value="EUR">Euro (€)</option>
+                <option value="GBP">British Pound (£)</option>
+              </select>
+            </div>
+            
+            <div class="mb-4">
+              <label for="taxIncluded" class="flex items-center">
+                <input type="checkbox" id="taxIncluded" class="mr-2">
+                <span>Prices include tax</span>
+              </label>
+            </div>
+            
+            <div class="mb-4">
+              <label for="showHSN" class="flex items-center">
+                <input type="checkbox" id="showHSN" class="mr-2" checked>
+                <span>Show HSN/SAC codes</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row justify-between gap-4 mt-8">
+          <button class="btn-secondary px-6 py-2 rounded font-medium prev-tab" data-prev="details">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Details
+          </button>
+          <button class="btn-primary px-6 py-2 rounded font-medium next-tab" data-next="preview">
+            Continue to Preview <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Preview Tab -->
+      <div id="preview-tab" class="tab-content">
+        <div class="mb-6 no-print">
+          <h2 class="text-xl font-semibold">Quotation Preview</h2>
+          <p class="text-gray-600">Review your quotation before exporting or converting to invoice</p>
+        </div>
+        
+        <div class="quote-preview p-4 sm:p-8 border border-gray-200 rounded-lg mb-8" id="quote-preview">
+          <!-- Quotation Header -->
+          <div class="flex flex-col md:flex-row justify-between items-start mb-6 pb-6 border-b border-gray-200">
+            <div class="flex items-start mb-4 md:mb-0">
+              <div id="preview-logo-container" class="mr-4" style="display: none;">
+                <img id="preview-logo" src="" alt="Company Logo" style="max-height: 80px; max-width: 160px;">
+              </div>
+              <div>
+                <h1 class="text-2xl font-bold text-gray-900">QUOTATION</h1>
+                <div class="text-gray-700 mt-2" id="preview-seller-name"></div>
+                <div class="text-gray-600 text-sm" id="preview-seller-gstin"></div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="mb-2">
+                <span class="font-semibold">Quotation No:</span>
+                <span id="preview-quote-number"></span>
+              </div>
+              <div class="mb-2">
+                <span class="font-semibold">Date:</span>
+                <span id="preview-quote-date"></span>
+              </div>
+              <div>
+                <span class="font-semibold">Valid Until:</span>
+                <span id="preview-expiry-date"></span>
+              </div>
+              <div class="quote-validity mt-3">
+                <i class="fas fa-calendar-check"></i>
+                <span>Valid for <span id="preview-validity-period"></span></span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Project Title -->
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-800" id="preview-project-title"></h2>
+          </div>
+          
+          <!-- Address Section -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+            <div>
+              <h3 class="text-lg font-semibold mb-2">From</h3>
+              <div class="text-gray-700" id="preview-seller-address"></div>
+              <div class="text-gray-700 mt-2" id="preview-seller-contact"></div>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-2">To</h3>
+              <div class="text-gray-700" id="preview-client-name"></div>
+              <div class="text-gray-600 text-sm" id="preview-client-gstin"></div>
+              <div class="text-gray-700 mt-1" id="preview-client-address"></div>
+              <div class="text-gray-700 mt-2" id="preview-client-contact"></div>
+            </div>
+          </div>
+          
+          <!-- Project Scope -->
+          <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-2">Project Scope</h3>
+            <div class="text-gray-700" id="preview-project-scope"></div>
+          </div>
+          
+          <!-- Items Table -->
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full quote-table">
+              <thead>
+                <tr>
+                  <th class="w-10">#</th>
+                  <th>Description</th>
+                  <th id="hsn-header" class="w-24">HSN/SAC</th>
+                  <th class="w-16">Qty</th>
+                  <th class="w-24">Rate</th>
+                  <th class="w-28">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="preview-items">
+                <!-- Items will be filled dynamically -->
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Totals Section -->
+          <div class="flex flex-col md:flex-row justify-between">
+            <div class="w-full md:w-1/2 mb-6 md:mb-0">
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-2">Payment Information</h3>
+                <div class="text-gray-700 mb-1"><span class="font-medium">Payment Terms:</span> <span id="preview-payment-terms"></span></div>
+                <div class="text-gray-700 mb-1"><span class="font-medium">Estimated Delivery:</span> <span id="preview-delivery-timeline"></span></div>
+                
+                <!-- Bank Payment Details -->
+                <div id="preview-bank-details">
+                  <div class="text-gray-700 mb-1 mt-3 font-medium">Bank Details:</div>
+                  <div class="text-gray-700 mb-1"><span class="font-medium">Bank:</span> <span id="preview-bank-name"></span></div>
+                  <div class="text-gray-700 mb-1"><span class="font-medium">Account:</span> <span id="preview-account-name"></span></div>
+                  <div class="text-gray-700 mb-1"><span class="font-medium">Account No:</span> <span id="preview-account-number"></span></div>
+                  <div class="text-gray-700 mb-1"><span class="font-medium">IFSC:</span> <span id="preview-ifsc-code"></span></div>
+                  <div class="text-gray-700"><span class="font-medium">Branch:</span> <span id="preview-branch-name"></span></div>
+                </div>
+                
+                <!-- UPI Payment Details -->
+                <div id="preview-upi-details" class="hidden">
+                  <div class="text-gray-700 mb-1 mt-3 font-medium">UPI Payment Details:</div>
+                  <div class="text-gray-700 mb-1"><span class="font-medium">UPI ID:</span> <span id="preview-upi-id"></span></div>
+                  <div class="text-gray-700 mb-1"><span class="font-medium">UPI Name:</span> <span id="preview-upi-name"></span></div>
+                  <div id="preview-upi-qr" class="hidden mt-2 flex justify-center">
+                    <img id="preview-qr-image" src="" alt="UPI QR Code" style="max-width: 120px; max-height: 120px;">
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="text-lg font-semibold mb-2">Terms & Conditions</h3>
+                <div class="text-gray-700 whitespace-pre-line" id="preview-terms"></div>
+              </div>
+            </div>
+            
+            <div class="w-full md:w-1/2 md:pl-8">
+              <div class="total-section p-4 rounded">
+                <div class="flex justify-between mb-2">
+                  <span class="text-gray-700">Subtotal:</span>
+                  <span id="preview-subtotal" class="text-gray-700"></span>
+                </div>
+                <div class="flex justify-between mb-2" id="preview-discount-row">
+                  <span class="text-gray-700">Discount:</span>
+                  <span id="preview-discount" class="text-gray-700"></span>
+                </div>
+                <div class="flex justify-between mb-2" id="preview-taxable-row">
+                  <span class="text-gray-700">Taxable Amount:</span>
+                  <span id="preview-taxable-amount" class="text-gray-700"></span>
+                </div>
+                <div class="flex justify-between mb-2" id="preview-tax-row">
+                  <span class="text-gray-700" id="preview-tax-label">GST (18%):</span>
+                  <span id="preview-tax-amount" class="text-gray-700"></span>
+                </div>
+                <div class="flex justify-between pt-2 border-t border-gray-200 font-semibold">
+                  <span>Total Amount:</span>
+                  <span id="preview-total-amount" class="text-lg text-primary"></span>
+                </div>
+                <div class="mt-2 text-sm text-gray-600">
+                  <span>Amount in words: </span>
+                  <span id="preview-amount-words"></span>
+                </div>
+              </div>
+              
+              <div class="acceptance-section mt-6">
+                <h3 class="text-lg font-semibold mb-4">Acceptance of Quotation</h3>
+                <p class="text-gray-700 mb-4">To accept this quotation, please sign below or respond via email confirmation.</p>
+                
+                <div class="signature-line"></div>
+                <div class="text-gray-700">Authorized Signature & Date</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Footer -->
+          <div class="mt-10 pt-6 border-t border-gray-200 text-center text-gray-600 text-sm">
+            <p class="mb-1">This is a quotation for the goods/services described above, subject to the noted terms and conditions.</p>
+            <p>Thank you for your business!</p>
+          </div>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row justify-between gap-4 mt-8 no-print btn-group">
+          <button class="btn-secondary px-6 py-2 rounded font-medium prev-tab" data-prev="items">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Items
+          </button>
+          
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button class="flex items-center justify-center px-6 py-2 bg-green-600 text-white rounded font-medium hover:bg-green-700 transition btn" id="convert-to-invoice-btn">
+              <i class="fas fa-file-invoice mr-2"></i> Convert to Invoice
+            </button>
+            <button class="flex items-center justify-center px-6 py-2 bg-purple-600 text-white rounded font-medium hover:bg-purple-700 transition btn" id="download-pdf-btn">
+              <i class="fas fa-file-pdf mr-2"></i> Download PDF
+            </button>
+            <button class="flex items-center justify-center px-6 py-2 bg-red-600 text-white rounded font-medium hover:bg-red-700 transition btn" id="download-image-btn">
+              <i class="fas fa-file-image mr-2"></i> Save as Image
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Invoice Conversion Modal -->
+    <div id="invoice-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+      <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md max-h-screen overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold">Convert to Invoice</h3>
+          <button id="close-modal" class="text-gray-600 hover:text-gray-800">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="mb-4">
+          <label for="invoiceNumber" class="form-label">Invoice Number</label>
+          <input type="text" id="invoiceNumber" class="form-input" placeholder="INV-2023-001">
+        </div>
+        
+        <div class="mb-4">
+          <label for="invoiceDate" class="form-label">Invoice Date</label>
+          <input type="date" id="invoiceDate" class="form-input">
+        </div>
+        
+        <div class="mb-4">
+          <label for="invoiceDueDate" class="form-label">Due Date</label>
+          <input type="date" id="invoiceDueDate" class="form-input">
+        </div>
+        
+        <div class="flex justify-end mt-6">
+          <button id="cancel-conversion" class="px-4 py-2 bg-gray-300 text-gray-700 rounded mr-2 hover:bg-gray-400 transition">
+            Cancel
+          </button>
+          <button id="confirm-conversion" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+            Generate Invoice
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- SEO Footer -->
+    <footer class="mt-10 py-8 border-t border-gray-200 text-center text-sm text-gray-500 no-print">
+      <div class="container mx-auto px-4">
+        <h2 class="text-lg font-semibold text-gray-700 mb-4">Professional Quotation Generator Tool</h2>
+        <p class="mb-4">Create professional business quotations in minutes with our free online Quotation Generator. Our easy-to-use tool helps you generate, customize, and download professional quotations and easily convert them to invoices when needed.</p>
+        <p class="mb-6">Perfect for businesses, freelancers, and entrepreneurs. No registration required, no data stored on our servers.</p>
+        <div class="flex flex-wrap justify-center gap-6 mb-6">
+          <a href="#" class="text-blue-600 hover:underline">About</a>
+          <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a>
+          <a href="#" class="text-blue-600 hover:underline">Terms of Service</a>
+          <a href="#" class="text-blue-600 hover:underline">Contact Us</a>
+          <a href="#" class="text-blue-600 hover:underline">FAQ</a>
+        </div>
+        <p>© <span id="current-year"></span> Quotation Generator. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+  
+  <!-- Load scripts at the end for better performance -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  
+  <script>
+    // Initialize quotation generator
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update copyright year
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      
+      // Set today's date
+      const today = new Date();
+      const todayStr = today.toISOString().split('T')[0];
+      document.getElementById('quoteDate').value = todayStr;
+      
+      // Set expiry date (30 days from today by default)
+      const expiryDate = new Date(today);
+      expiryDate.setDate(today.getDate() + 30);
+      const expiryDateStr = expiryDate.toISOString().split('T')[0];
+      document.getElementById('expiryDate').value = expiryDateStr;
+      
+      // Update expiry date when validity period changes
+      document.getElementById('validityPeriod').addEventListener('change', function() {
+        const days = parseInt(this.value);
+        const newExpiryDate = new Date(document.getElementById('quoteDate').value);
+        newExpiryDate.setDate(newExpiryDate.getDate() + days);
+        document.getElementById('expiryDate').value = newExpiryDate.toISOString().split('T')[0];
+        updatePreview();
+      });
+      
+      // Update expiry date when quote date changes
+      document.getElementById('quoteDate').addEventListener('change', function() {
+        const days = parseInt(document.getElementById('validityPeriod').value);
+        const newExpiryDate = new Date(this.value);
+        newExpiryDate.setDate(newExpiryDate.getDate() + days);
+        document.getElementById('expiryDate').value = newExpiryDate.toISOString().split('T')[0];
+        updatePreview();
+      });
+      
+      // Tab navigation
+      const tabLinks = document.querySelectorAll('.tab-link');
+      tabLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const tabId = this.getAttribute('data-tab');
+          activateTab(tabId);
+        });
+      });
+      
+      // Next and Previous tab buttons
+      document.querySelectorAll('.next-tab').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const nextTab = this.getAttribute('data-next');
+          activateTab(nextTab);
+        });
+      });
+      
+      document.querySelectorAll('.prev-tab').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const prevTab = this.getAttribute('data-prev');
+          activateTab(prevTab);
+        });
+      });
+      
+      // Custom payment terms toggle
+      document.getElementById('paymentTerms').addEventListener('change', function() {
+        if (this.value === 'Custom') {
+          document.getElementById('customPaymentTerms').classList.remove('hidden');
+        } else {
+          document.getElementById('customPaymentTerms').classList.add('hidden');
+        }
+        updatePreview();
+      });
+      
+      // Handle logo upload
+      document.getElementById('companyLogo').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const logoPreviewContainer = document.getElementById('logoPreviewContainer');
+            logoPreviewContainer.innerHTML = `<img src="${e.target.result}" alt="Logo" style="max-width: 100%; max-height: 100%;">`;
+            
+            document.getElementById('preview-logo').src = e.target.result;
+            document.getElementById('preview-logo-container').style.display = 'block';
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // Handle UPI QR code upload
+      document.getElementById('upiQrCode').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const upiQrContainer = document.getElementById('upiQrContainer');
+            upiQrContainer.innerHTML = `<img src="${e.target.result}" alt="UPI QR Code" style="max-width: 100%; max-height: 100%;">`;
+            
+            document.getElementById('preview-qr-image').src = e.target.result;
+            document.getElementById('preview-upi-qr').classList.remove('hidden');
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // Payment method toggle
+      const paymentOptions = document.querySelectorAll('.payment-method-option');
+      paymentOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          const method = this.getAttribute('data-method');
+          
+          // Update active state
+          paymentOptions.forEach(opt => opt.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Show/hide corresponding sections
+          if (method === 'bank') {
+            document.getElementById('bank-details-section').classList.remove('hidden');
+            document.getElementById('upi-details-section').classList.add('hidden');
+            document.getElementById('preview-bank-details').classList.remove('hidden');
+            document.getElementById('preview-upi-details').classList.add('hidden');
+          } else {
+            document.getElementById('bank-details-section').classList.add('hidden');
+            document.getElementById('upi-details-section').classList.remove('hidden');
+            document.getElementById('preview-bank-details').classList.add('hidden');
+            document.getElementById('preview-upi-details').classList.remove('hidden');
+          }
+          
+          updatePreview();
+        });
+      });
+      
+      // Toggle tax fields
+      document.getElementById('showTaxFields').addEventListener('change', function() {
+        if (this.checked) {
+          document.getElementById('taxRatesContainer').classList.remove('hidden');
+          document.querySelectorAll('[data-field="taxType"]').forEach(el => {
+            el.closest('td').classList.remove('hidden');
+          });
+          document.getElementById('preview-taxable-row').style.display = 'flex';
+          document.getElementById('preview-tax-row').style.display = 'flex';
+        } else {
+          document.getElementById('taxRatesContainer').classList.add('hidden');
+          document.querySelectorAll('[data-field="taxType"]').forEach(el => {
+            el.closest('td').classList.add('hidden');
+          });
+          document.getElementById('preview-taxable-row').style.display = 'none';
+          document.getElementById('preview-tax-row').style.display = 'none';
+        }
+        updatePreview();
+      });
+      
+      // Toggle HSN/SAC code display
+      document.getElementById('showHSN').addEventListener('change', function() {
+        const hsnCells = document.querySelectorAll('[data-field="hsn"]');
+        if (this.checked) {
+          hsnCells.forEach(el => {
+            el.closest('td').classList.remove('hidden');
+          });
+          document.getElementById('hsn-header').classList.remove('hidden');
+        } else {
+          hsnCells.forEach(el => {
+            el.closest('td').classList.add('hidden');
+          });
+          document.getElementById('hsn-header').classList.add('hidden');
+        }
+        updatePreview();
+      });
+      
+      // Add item button
+      document.getElementById('add-item-btn').addEventListener('click', addNewItem);
+      
+      // Export buttons
+      document.getElementById('download-image-btn').addEventListener('click', generateImage);
+      document.getElementById('download-pdf-btn').addEventListener('click', generatePDF);
+      
+      // Convert to Invoice
+      document.getElementById('convert-to-invoice-btn').addEventListener('click', showInvoiceModal);
+      document.getElementById('close-modal').addEventListener('click', hideInvoiceModal);
+      document.getElementById('cancel-conversion').addEventListener('click', hideInvoiceModal);
+      document.getElementById('confirm-conversion').addEventListener('click', convertToInvoice);
+      
+      // Initialize with one item
+      addNewItem();
+      
+      // Set up event listeners for updates
+      setupFormListeners();
+      
+      // Default filling for quick testing
+      fillDefaultValues();
+    });
+    
+    // Toast notification
+    function showToast(message, type = 'success', duration = 3000) {
+      const toast = document.getElementById('toast-notification');
+      toast.textContent = message;
+      toast.className = `toast ${type}`;
+      
+      // Show the toast
+      setTimeout(() => {
+        toast.classList.add('show');
+      }, 100);
+      
+      // Hide after duration
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, duration);
+    }
+    
+    // Tab activation
+    function activateTab(tabId) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Remove active class from all tab links
+      document.querySelectorAll('.tab-link').forEach(link => {
+        link.classList.remove('tab-active');
+      });
+      
+      // Activate the selected tab
+      document.getElementById(`${tabId}-tab`).classList.add('active');
+      
+      // Add active class to the clicked tab link
+      document.querySelector(`.tab-link[data-tab="${tabId}"]`).classList.add('tab-active');
+      
+      // Update preview when switching to preview tab
+      if (tabId === 'preview') {
+        updatePreview();
+      }
+    }
+    
+    // Add a new item row
+    function addNewItem() {
+      const itemsTable = document.getElementById('item-rows');
+      const itemCount = itemsTable.children.length + 1;
+      
+      const newRow = document.createElement('tr');
+      newRow.className = 'item-row';
+      newRow.innerHTML = `
+        <td class="py-3 px-2 sm:px-4">${itemCount}</td>
+        <td class="py-3 px-2 sm:px-4">
+          <input type="text" class="form-input item-field" data-field="description" placeholder="Item description">
+        </td>
+        <td class="py-3 px-2 sm:px-4">
+          <input type="text" class="form-input item-field" data-field="hsn" placeholder="HSN/SAC">
+        </td>
+        <td class="py-3 px-2 sm:px-4">
+          <select class="form-select item-field" data-field="taxType">
+            <option value="GST">GST</option>
+            <option value="IGST">IGST</option>
+            <option value="Exempt">Exempt</option>
+          </select>
+        </td>
+        <td class="py-3 px-2 sm:px-4">
+          <input type="number" class="form-input item-field" data-field="quantity" value="1" min="1">
+        </td>
+        <td class="py-3 px-2 sm:px-4">
+          <input type="number" class="form-input item-field" data-field="rate" value="0" min="0" step="0.01">
+        </td>
+        <td class="py-3 px-2 sm:px-4">
+          <span class="item-amount">₹0.00</span>
+        </td>
+        <td class="py-3 px-2 sm:px-4">
+          <button class="text-red-500 hover:text-red-700 delete-item" ${itemCount === 1 ? 'disabled' : ''}>
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      `;
+      
+      itemsTable.appendChild(newRow);
+      
+      // Add event listeners to new inputs
+      newRow.querySelectorAll('.item-field').forEach(field => {
+        field.addEventListener('input', function() {
+          updateItemAmount(newRow);
+        });
+      });
+      
+      // Add delete functionality
+      const deleteBtn = newRow.querySelector('.delete-item');
+      deleteBtn.addEventListener('click', function() {
+        if (itemsTable.children.length > 1) {
+          itemsTable.removeChild(newRow);
+          updateItemNumbers();
+          updatePreview();
+        }
+      });
+      
+      // Check if tax fields should be hidden
+      if (!document.getElementById('showTaxFields').checked) {
+        newRow.querySelector('[data-field="taxType"]').closest('td').classList.add('hidden');
+      }
+      
+      // Check if HSN fields should be hidden
+      if (!document.getElementById('showHSN').checked) {
+        newRow.querySelector('[data-field="hsn"]').closest('td').classList.add('hidden');
+      }
+    }
+    
+    // Update item numbers after deletion
+    function updateItemNumbers() {
+      const itemRows = document.querySelectorAll('#item-rows tr');
+      itemRows.forEach((row, index) => {
+        row.cells[0].textContent = index + 1;
+        row.querySelector('.delete-item').disabled = (index === 0 && itemRows.length === 1);
+      });
+    }
+    
+    // Update item amount
+    function updateItemAmount(row) {
+      const quantity = parseFloat(row.querySelector('[data-field="quantity"]').value) || 0;
+      const rate = parseFloat(row.querySelector('[data-field="rate"]').value) || 0;
+      const amount = quantity * rate;
+      
+      row.querySelector('.item-amount').textContent = `₹${amount.toFixed(2)}`;
+      updatePreview();
+    }
+    
+    // Set up listeners for form fields
+    function setupFormListeners() {
+      document.querySelectorAll('input, textarea, select').forEach(element => {
+        if (!element.classList.contains('item-field')) {
+          element.addEventListener('input', updatePreview);
+        }
+      });
+    }
+    
+    // Update the preview with current data
+    function updatePreview() {
+      // Quotation information
+      document.getElementById('preview-quote-number').textContent = document.getElementById('quoteNumber').value || 'QT-001';
+      document.getElementById('preview-quote-date').textContent = formatDate(document.getElementById('quoteDate').value);
+      document.getElementById('preview-expiry-date').textContent = formatDate(document.getElementById('expiryDate').value);
+      document.getElementById('preview-validity-period').textContent = document.getElementById('validityPeriod').value || '30 days';
+      document.getElementById('preview-project-title').textContent = document.getElementById('projectTitle').value || 'Project/Service Title';
+      
+      // Seller information
+      document.getElementById('preview-seller-name').textContent = document.getElementById('sellerName').value || 'Your Company';
+      
+      const sellerGSTIN = document.getElementById('sellerGSTIN').value;
+      document.getElementById('preview-seller-gstin').textContent = sellerGSTIN ? `GSTIN: ${sellerGSTIN}` : '';
+      
+      document.getElementById('preview-seller-address').textContent = document.getElementById('sellerAddress').value || 'Company Address';
+      document.getElementById('preview-seller-contact').textContent = document.getElementById('sellerContact').value || 'Contact Information';
+      
+      // Client information
+      document.getElementById('preview-client-name').textContent = document.getElementById('clientName').value || 'Client Name';
+      
+      const clientGSTIN = document.getElementById('clientGSTIN').value;
+      document.getElementById('preview-client-gstin').textContent = clientGSTIN ? `GSTIN: ${clientGSTIN}` : '';
+      
+      document.getElementById('preview-client-address').textContent = document.getElementById('clientAddress').value || 'Client Address';
+      document.getElementById('preview-client-contact').textContent = document.getElementById('clientContact').value || '';
+      
+      // Project details
+      document.getElementById('preview-project-scope').textContent = document.getElementById('projectScope').value || 'Project scope details will appear here.';
+      document.getElementById('preview-delivery-timeline').textContent = document.getElementById('deliveryTimeline').value || 'Not specified';
+      
+      // Payment details - Bank
+      let paymentTermsText = document.getElementById('paymentTerms').value;
+      if (paymentTermsText === 'Custom') {
+        paymentTermsText = document.getElementById('customTermsText').value || 'Custom';
+      }
+      document.getElementById('preview-payment-terms').textContent = paymentTermsText;
+      
+      document.getElementById('preview-bank-name').textContent = document.getElementById('bankName').value || '';
+      document.getElementById('preview-account-name').textContent = document.getElementById('accountName').value || '';
+      document.getElementById('preview-account-number').textContent = document.getElementById('accountNumber').value || '';
+      document.getElementById('preview-ifsc-code').textContent = document.getElementById('ifscCode').value || '';
+      document.getElementById('preview-branch-name').textContent = document.getElementById('branchName').value || '';
+      
+      // Payment details - UPI
+      document.getElementById('preview-upi-id').textContent = document.getElementById('upiId').value || '';
+      document.getElementById('preview-upi-name').textContent = document.getElementById('upiName').value || '';
+      
+      // Terms & Conditions
+      document.getElementById('preview-terms').textContent = document.getElementById('termsConditions').value || '';
+      
+      // Process items
+      const previewItems = document.getElementById('preview-items');
+      previewItems.innerHTML = '';
+      
+      const items = [];
+      let subtotal = 0;
+      
+      document.querySelectorAll('.item-row').forEach((row, index) => {
+        const description = row.querySelector('[data-field="description"]').value || `Item ${index + 1}`;
+        const hsn = row.querySelector('[data-field="hsn"]').value || '';
+        const taxType = row.querySelector('[data-field="taxType"]').value;
+        const quantity = parseFloat(row.querySelector('[data-field="quantity"]').value) || 0;
+        const rate = parseFloat(row.querySelector('[data-field="rate"]').value) || 0;
+        const amount = quantity * rate;
+        
+        items.push({
+          description,
+          hsn,
+          taxType,
+          quantity,
+          rate,
+          amount
+        });
+        
+        subtotal += amount;
+        
+        const itemRow = document.createElement('tr');
+        const showHSN = document.getElementById('showHSN').checked;
+        
+        itemRow.innerHTML = `
+          <td class="py-3 px-4">${index + 1}</td>
+          <td class="py-3 px-4">${description}</td>
+          ${showHSN ? `<td class="py-3 px-4">${hsn}</td>` : ''}
+          <td class="py-3 px-4">${quantity}</td>
+          <td class="py-3 px-4">₹${rate.toFixed(2)}</td>
+          <td class="py-3 px-4">₹${amount.toFixed(2)}</td>
+        `;
+        previewItems.appendChild(itemRow);
+      });
+      
+      // Toggle HSN/SAC column in preview
+      document.getElementById('hsn-header').style.display = document.getElementById('showHSN').checked ? '' : 'none';
+      
+      // Calculate discount
+      const discountType = document.getElementById('discountType').value;
+      const discountValue = parseFloat(document.getElementById('discountValue').value) || 0;
+      let discount = 0;
+      
+      if (discountType === 'percentage') {
+        discount = subtotal * (discountValue / 100);
+      } else {
+        discount = discountValue;
+      }
+      
+      // Apply discount (limited to subtotal)
+      discount = Math.min(discount, subtotal);
+      const taxableAmount = subtotal - discount;
+      
+      // Calculate taxes (only if tax fields are shown)
+      let totalTax = 0;
+      let taxLabel = '';
+      
+      if (document.getElementById('showTaxFields').checked) {
+        const cgstRate = parseFloat(document.getElementById('cgstRate').value) || 0;
+        const sgstRate = parseFloat(document.getElementById('sgstRate').value) || 0;
+        const igstRate = parseFloat(document.getElementById('igstRate').value) || 0;
+        
+        let cgstAmount = 0;
+        let sgstAmount = 0;
+        let igstAmount = 0;
+        
+        if (items.some(item => item.taxType === 'IGST')) {
+          igstAmount = taxableAmount * (igstRate / 100);
+          taxLabel = `IGST (${igstRate}%)`;
+        } else if (items.some(item => item.taxType === 'GST')) {
+          cgstAmount = taxableAmount * (cgstRate / 100);
+          sgstAmount = taxableAmount * (sgstRate / 100);
+          taxLabel = `CGST (${cgstRate}%) + SGST (${sgstRate}%)`;
+        }
+        
+        totalTax = cgstAmount + sgstAmount + igstAmount;
+      }
+      
+      const totalAmount = taxableAmount + totalTax;
+      
+      // Update totals
+      document.getElementById('preview-subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+      document.getElementById('preview-discount').textContent = `₹${discount.toFixed(2)}`;
+      document.getElementById('preview-taxable-amount').textContent = `₹${taxableAmount.toFixed(2)}`;
+      document.getElementById('preview-tax-label').textContent = taxLabel + ':';
+      document.getElementById('preview-tax-amount').textContent = `₹${totalTax.toFixed(2)}`;
+      document.getElementById('preview-total-amount').textContent = `₹${totalAmount.toFixed(2)}`;
+      document.getElementById('preview-amount-words').textContent = numberToWords(totalAmount) + ' Rupees Only';
+      
+      // Hide discount row if no discount
+      document.getElementById('preview-discount-row').style.display = discount > 0 ? 'flex' : 'none';
+    }
+    
+    // Format date (DD-MM-YYYY)
+    function formatDate(dateString) {
+      if (!dateString) return '';
+      
+      const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      
+      return `${day}-${month}-${year}`;
+    }
+    
+    // Convert number to words
+    function numberToWords(num) {
+      const single = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+      const double = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+      const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+      
+      if (num === 0) return 'Zero';
+      
+      function convert(n) {
+        if (n < 10) return single[n];
+        if (n < 20) return double[n - 10];
+        if (n < 100) return tens[Math.floor(n / 10)] + (n % 10 ? ' ' + single[n % 10] : '');
+        if (n < 1000) return single[Math.floor(n / 100)] + ' Hundred' + (n % 100 ? ' and ' + convert(n % 100) : '');
+        if (n < 100000) return convert(Math.floor(n / 1000)) + ' Thousand' + (n % 1000 ? ' ' + convert(n % 1000) : '');
+        if (n < 10000000) return convert(Math.floor(n / 100000)) + ' Lakh' + (n % 100000 ? ' ' + convert(n % 100000) : '');
+        return convert(Math.floor(n / 10000000)) + ' Crore' + (n % 10000000 ? ' ' + convert(n % 10000000) : '');
+      }
+      
+      const rupees = Math.floor(num);
+      const paise = Math.round((num - rupees) * 100);
+      
+      let result = convert(rupees);
+      
+      if (paise > 0) {
+        result += ' and ' + convert(paise) + ' Paise';
+      }
+      
+      return result;
+    }
+    
+    // Generate Image
+    function generateImage() {
+      const element = document.getElementById('quote-preview');
+      const quoteNo = document.getElementById('quoteNumber').value || 'QT-001';
+      
+      // Hide buttons for image generation
+      document.querySelectorAll('.no-print').forEach(item => {
+        item.style.display = 'none';
+      });
+      
+      html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false
+      }).then(canvas => {
+        // Create download link
+        const link = document.createElement('a');
+        link.download = `Quotation_${quoteNo}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        // Show buttons again
+        document.querySelectorAll('.no-print').forEach(item => {
+          item.style.display = '';
+        });
+        
+        showToast('Quotation image saved successfully!');
+      }).catch(error => {
+        console.error('Error generating image:', error);
+        showToast('Failed to generate image', 'error');
+        
+        // Show buttons again
+        document.querySelectorAll('.no-print').forEach(item => {
+          item.style.display = '';
+        });
+      });
+    }
+    
+    // Generate PDF
+    function generatePDF() {
+      const element = document.getElementById('quote-preview');
+      const quoteNo = document.getElementById('quoteNumber').value || 'QT-001';
+      
+      // Hide buttons for PDF generation
+      document.querySelectorAll('.no-print').forEach(item => {
+        item.style.display = 'none';
+      });
+      
+      html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false
+      }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        });
+        
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+        
+        // Add first page
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        
+        // Add additional pages if needed
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+        
+        // Save PDF
+        pdf.save(`Quotation_${quoteNo}.pdf`);
+        
+        // Show buttons again
+        document.querySelectorAll('.no-print').forEach(item => {
+          item.style.display = '';
+        });
+        
+        showToast('Quotation PDF downloaded successfully!');
+      }).catch(error => {
+        console.error('Error generating PDF:', error);
+        showToast('Failed to generate PDF', 'error');
+        
+        // Show buttons again
+        document.querySelectorAll('.no-print').forEach(item => {
+          item.style.display = '';
+        });
+      });
+    }
+    
+    // Show Invoice Modal
+    function showInvoiceModal() {
+      const modal = document.getElementById('invoice-modal');
+      modal.classList.remove('hidden');
+      
+      // Prefill invoice number based on quotation number
+      const quoteNo = document.getElementById('quoteNumber').value || 'QT-001';
+      let invoiceNo = quoteNo.replace('QT-', 'INV-');
+      if (invoiceNo === quoteNo) {
+        invoiceNo = 'INV-' + quoteNo;
+      }
+      
+      document.getElementById('invoiceNumber').value = invoiceNo;
+      
+      // Set today's date
+      const today = new Date();
+      const todayStr = today.toISOString().split('T')[0];
+      document.getElementById('invoiceDate').value = todayStr;
+      
+      // Set due date (30 days from today by default)
+      const dueDate = new Date(today);
+      dueDate.setDate(today.getDate() + 30);
+      const dueDateStr = dueDate.toISOString().split('T')[0];
+      document.getElementById('invoiceDueDate').value = dueDateStr;
+    }
+    
+    // Hide Invoice Modal
+    function hideInvoiceModal() {
+      const modal = document.getElementById('invoice-modal');
+      modal.classList.add('hidden');
+    }
+    
+    // Convert Quotation to Invoice
+    function convertToInvoice() {
+      // Get invoice details from modal
+      const invoiceNumber = document.getElementById('invoiceNumber').value;
+      const invoiceDate = document.getElementById('invoiceDate').value;
+      const invoiceDueDate = document.getElementById('invoiceDueDate').value;
+      
+      if (!invoiceNumber) {
+        showToast('Please enter an invoice number', 'error');
+        return;
+      }
+      
+      if (!invoiceDate) {
+        showToast('Please select an invoice date', 'error');
+        return;
+      }
+      
+      if (!invoiceDueDate) {
+        showToast('Please select a due date', 'error');
+        return;
+      }
+      
+      // Clone the quotation preview
+      const quotePreview = document.getElementById('quote-preview');
+      const invoicePreview = quotePreview.cloneNode(true);
+      
+      // Update title from "QUOTATION" to "TAX INVOICE"
+      const titleElement = invoicePreview.querySelector('h1');
+      if (titleElement) {
+        titleElement.textContent = 'TAX INVOICE';
+      }
+      
+      // Update quotation number to invoice number
+      const quoteNumberElement = invoicePreview.querySelector('#preview-quote-number');
+      if (quoteNumberElement) {
+        const label = quoteNumberElement.previousElementSibling;
+        if (label) {
+          label.textContent = 'Invoice No:';
+        }
+        quoteNumberElement.textContent = invoiceNumber;
+      }
+      
+      // Update dates
+      const quoteDateElement = invoicePreview.querySelector('#preview-quote-date');
+      if (quoteDateElement) {
+        quoteDateElement.textContent = formatDate(invoiceDate);
+      }
+      
+      // Change "Valid Until" to "Due Date"
+      const expiryDateElement = invoicePreview.querySelector('#preview-expiry-date');
+      if (expiryDateElement) {
+        const label = expiryDateElement.previousElementSibling;
+        if (label) {
+          label.textContent = 'Due Date:';
+        }
+        expiryDateElement.textContent = formatDate(invoiceDueDate);
+      }
+      
+      // Remove validity badge
+      const validityElement = invoicePreview.querySelector('.quote-validity');
+      if (validityElement) {
+        validityElement.remove();
+      }
+      
+      // Remove acceptance section
+      const acceptanceSection = invoicePreview.querySelector('.acceptance-section');
+      if (acceptanceSection) {
+        acceptanceSection.remove();
+      }
+      
+      // Update footer text
+      const footerText = invoicePreview.querySelector('.mt-10.pt-6.border-t.border-gray-200 p');
+      if (footerText) {
+        footerText.textContent = 'This is a computer-generated invoice and does not require a signature.';
+      }
+      
+      // Create a temporary container to hold the invoice
+      const tempContainer = document.createElement('div');
+      tempContainer.style.position = 'absolute';
+      tempContainer.style.left = '-9999px';
+      tempContainer.appendChild(invoicePreview);
+      document.body.appendChild(tempContainer);
+      
+      // Generate PDF from the invoice
+      html2canvas(invoicePreview, {
+        scale: 2,
+        useCORS: true,
+        logging: false
+      }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        });
+        
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+        
+        // Add first page
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        
+        // Add additional pages if needed
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+        
+        // Save PDF
+        pdf.save(`Invoice_${invoiceNumber}.pdf`);
+        
+        // Clean up
+        document.body.removeChild(tempContainer);
+        hideInvoiceModal();
+        
+        showToast('Invoice generated and downloaded successfully!', 'success');
+      }).catch(error => {
+        console.error('Error generating invoice:', error);
+        document.body.removeChild(tempContainer);
+        hideInvoiceModal();
+        showToast('Failed to generate invoice', 'error');
+      });
+    }
+    
+    // Fill default values for testing
+    function fillDefaultValues() {
+      document.getElementById('quoteNumber').value = 'QT-2023-001';
+      document.getElementById('projectTitle').value = 'Website Development Services';
+      document.getElementById('projectScope').value = 'Design and development of a responsive business website including homepage, about us, services, and contact pages. Includes basic SEO optimization and contact form setup.';
+      document.getElementById('deliveryTimeline').value = '30-45 days from project commencement';
+      
+      document.getElementById('sellerName').value = 'Webcraft Solutions Pvt Ltd';
+      document.getElementById('sellerGSTIN').value = '27AABCU9603R1ZX';
+      document.getElementById('sellerAddress').value = '123 Business Park, Andheri East\nMumbai, Maharashtra 400069';
+      document.getElementById('sellerContact').value = 'Phone: +91 9876543210\nEmail: contact@webcraftsolutions.com';
+      
+      document.getElementById('clientName').value = 'Global Trading Co.';
+      document.getElementById('clientGSTIN').value = '29AADCB1234H1ZC';
+      document.getElementById('clientAddress').value = '456 Industrial Area, Phase 2\nBangalore, Karnataka 560100';
+      document.getElementById('clientContact').value = 'Phone: +91 9988776655\nEmail: info@globaltradingco.com';
+      
+      document.getElementById('bankName').value = 'HDFC Bank';
+      document.getElementById('accountNumber').value = '50200012345678';
+      document.getElementById('ifscCode').value = 'HDFC0001234';
+      document.getElementById('accountName').value = 'Webcraft Solutions Pvt Ltd';
+      document.getElementById('branchName').value = 'Andheri East, Mumbai';
+      
+      document.getElementById('upiId').value = 'webcraft@hdfcbank';
+      document.getElementById('upiName').value = 'Webcraft Solutions';
+      
+      document.getElementById('termsConditions').value = '1. This quotation is valid for 30 days from the issue date.\n2. 50% advance payment required to commence work.\n3. Delivery timeline starts after receipt of advance payment and required content.\n4. Additional revisions beyond agreed scope will be charged separately.\n5. Final payment due before handover of complete website files.';
+      
+      // Set first item details
+      const firstItemRow = document.querySelector('.item-row');
+      firstItemRow.querySelector('[data-field="description"]').value = 'Website Design & Development';
+      firstItemRow.querySelector('[data-field="hsn"]').value = '998314';
+      firstItemRow.querySelector('[data-field="quantity"]').value = '1';
+      firstItemRow.querySelector('[data-field="rate"]').value = '45000';
+      updateItemAmount(firstItemRow);
+      
+      // Add another item
+      addNewItem();
+      const secondItemRow = document.querySelectorAll('.item-row')[1];
+      secondItemRow.querySelector('[data-field="description"]').value = 'Content Management System Setup';
+      secondItemRow.querySelector('[data-field="hsn"]').value = '998314';
+      secondItemRow.querySelector('[data-field="quantity"]').value = '1';
+      secondItemRow.querySelector('[data-field="rate"]').value = '15000';
+      updateItemAmount(secondItemRow);
+      
+      // Add a third item
+      addNewItem();
+      const thirdItemRow = document.querySelectorAll('.item-row')[2];
+      thirdItemRow.querySelector('[data-field="description"]').value = 'Basic SEO Package';
+      thirdItemRow.querySelector('[data-field="hsn"]').value = '998361';
+      thirdItemRow.querySelector('[data-field="quantity"]').value = '1';
+      thirdItemRow.querySelector('[data-field="rate"]').value = '10000';
+      updateItemAmount(thirdItemRow);
+      
+      // Add discount
+      document.getElementById('discountType').value = 'percentage';
+      document.getElementById('discountValue').value = '5';
+      
+      // Update preview
+      updatePreview();
+    }
+    
+    // Handle clicks outside the modal to close it
+    window.addEventListener('click', function(event) {
+      const modal = document.getElementById('invoice-modal');
+      if (event.target === modal) {
+        hideInvoiceModal();
+      }
+    });
+  </script>
+</body>
+</html>
