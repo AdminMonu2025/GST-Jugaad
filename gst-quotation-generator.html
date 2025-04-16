@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<a href="index.html">
-    	<button>Home</button>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Create professional business quotations easily with our free online Quotation Generator. Download as PDF or convert to invoice.">
@@ -358,9 +356,42 @@
       margin-top: 60px;
       margin-bottom: 8px;
     }
+    
+    /* Home button styles */
+    .home-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 999;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .home-button:hover {
+      background-color: var(--secondary-color);
+      transform: scale(1.05);
+    }
+    
+    .home-button i {
+      font-size: 1.3rem;
+    }
   </style>
 </head>
 <body class="min-h-screen">
+  <!-- Home Button -->
+  <a href="index.html" class="home-button no-print">
+    <i class="fas fa-home"></i>
+  </a>
+  
   <div class="container mx-auto py-4 sm:py-8 px-4">
     <div class="quote-box p-4 sm:p-8">
       <!-- Header -->
@@ -625,6 +656,7 @@
                 <th class="py-3 px-2 sm:px-4 text-left">Description</th>
                 <th class="py-3 px-2 sm:px-4 text-left">HSN/SAC</th>
                 <th class="py-3 px-2 sm:px-4 text-left">Tax Type</th>
+                <th class="py-3 px-2 sm:px-4 text-left">GST %</th>
                 <th class="py-3 px-2 sm:px-4 text-left">Quantity</th>
                 <th class="py-3 px-2 sm:px-4 text-left">Rate (₹)</th>
                 <th class="py-3 px-2 sm:px-4 text-left">Amount (₹)</th>
@@ -799,6 +831,7 @@
                   <th class="w-10">#</th>
                   <th>Description</th>
                   <th id="hsn-header" class="w-24">HSN/SAC</th>
+                  <th class="w-20">GST %</th>
                   <th class="w-16">Qty</th>
                   <th class="w-24">Rate</th>
                   <th class="w-28">Amount</th>
@@ -1104,11 +1137,17 @@
           document.querySelectorAll('[data-field="taxType"]').forEach(el => {
             el.closest('td').classList.remove('hidden');
           });
+          document.querySelectorAll('[data-field="gstRate"]').forEach(el => {
+            el.closest('td').classList.remove('hidden');
+          });
           document.getElementById('preview-taxable-row').style.display = 'flex';
           document.getElementById('preview-tax-row').style.display = 'flex';
         } else {
           document.getElementById('taxRatesContainer').classList.add('hidden');
           document.querySelectorAll('[data-field="taxType"]').forEach(el => {
+            el.closest('td').classList.add('hidden');
+          });
+          document.querySelectorAll('[data-field="gstRate"]').forEach(el => {
             el.closest('td').classList.add('hidden');
           });
           document.getElementById('preview-taxable-row').style.display = 'none';
@@ -1152,9 +1191,6 @@
       
       // Set up event listeners for updates
       setupFormListeners();
-      
-      // Default filling for quick testing
-      fillDefaultValues();
     });
     
     // Toast notification
@@ -1221,6 +1257,9 @@
           </select>
         </td>
         <td class="py-3 px-2 sm:px-4">
+          <input type="number" class="form-input item-field" data-field="gstRate" value="18" min="0" max="28" step="0.01">
+        </td>
+        <td class="py-3 px-2 sm:px-4">
           <input type="number" class="form-input item-field" data-field="quantity" value="1" min="1">
         </td>
         <td class="py-3 px-2 sm:px-4">
@@ -1258,6 +1297,7 @@
       // Check if tax fields should be hidden
       if (!document.getElementById('showTaxFields').checked) {
         newRow.querySelector('[data-field="taxType"]').closest('td').classList.add('hidden');
+        newRow.querySelector('[data-field="gstRate"]').closest('td').classList.add('hidden');
       }
       
       // Check if HSN fields should be hidden
@@ -1356,6 +1396,7 @@
         const description = row.querySelector('[data-field="description"]').value || `Item ${index + 1}`;
         const hsn = row.querySelector('[data-field="hsn"]').value || '';
         const taxType = row.querySelector('[data-field="taxType"]').value;
+        const gstRate = parseFloat(row.querySelector('[data-field="gstRate"]').value) || 0;
         const quantity = parseFloat(row.querySelector('[data-field="quantity"]').value) || 0;
         const rate = parseFloat(row.querySelector('[data-field="rate"]').value) || 0;
         const amount = quantity * rate;
@@ -1364,6 +1405,7 @@
           description,
           hsn,
           taxType,
+          gstRate,
           quantity,
           rate,
           amount
@@ -1378,6 +1420,7 @@
           <td class="py-3 px-4">${index + 1}</td>
           <td class="py-3 px-4">${description}</td>
           ${showHSN ? `<td class="py-3 px-4">${hsn}</td>` : ''}
+          <td class="py-3 px-4">${gstRate}%</td>
           <td class="py-3 px-4">${quantity}</td>
           <td class="py-3 px-4">₹${rate.toFixed(2)}</td>
           <td class="py-3 px-4">₹${amount.toFixed(2)}</td>
@@ -1534,15 +1577,17 @@
       });
       
       html2canvas(element, {
-        scale: 2,
+        scale: 1.5, // Reduced from 2 to 1.5 to decrease file size
         useCORS: true,
-        logging: false
+        logging: false,
+        backgroundColor: '#ffffff'
       }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
+        const imgData = canvas.toDataURL('image/jpeg', 0.8); // Change to JPEG with compression
         const pdf = new jspdf.jsPDF({
           orientation: 'portrait',
           unit: 'mm',
-          format: 'a4'
+          format: 'a4',
+          compress: true // Enable compression
         });
         
         const imgWidth = 210; // A4 width in mm
@@ -1552,18 +1597,18 @@
         let position = 0;
         
         // Add first page
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight, null, 'FAST'); // Use FAST compression
         heightLeft -= pageHeight;
         
         // Add additional pages if needed
         while (heightLeft > 0) {
           position = heightLeft - imgHeight;
           pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight, null, 'FAST');
           heightLeft -= pageHeight;
         }
         
-        // Save PDF
+        // Save PDF with optimization
         pdf.save(`Quotation_${quoteNo}.pdf`);
         
         // Show buttons again
@@ -1700,15 +1745,17 @@
       
       // Generate PDF from the invoice
       html2canvas(invoicePreview, {
-        scale: 2,
+        scale: 1.5, // Reduced scale for smaller file size
         useCORS: true,
-        logging: false
+        logging: false,
+        backgroundColor: '#ffffff'
       }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
+        const imgData = canvas.toDataURL('image/jpeg', 0.8); // Use JPEG with compression
         const pdf = new jspdf.jsPDF({
           orientation: 'portrait',
           unit: 'mm',
-          format: 'a4'
+          format: 'a4',
+          compress: true // Enable compression
         });
         
         const imgWidth = 210; // A4 width in mm
@@ -1718,14 +1765,14 @@
         let position = 0;
         
         // Add first page
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight, null, 'FAST');
         heightLeft -= pageHeight;
         
         // Add additional pages if needed
         while (heightLeft > 0) {
           position = heightLeft - imgHeight;
           pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight, null, 'FAST');
           heightLeft -= pageHeight;
         }
         
@@ -1743,68 +1790,6 @@
         hideInvoiceModal();
         showToast('Failed to generate invoice', 'error');
       });
-    }
-    
-    // Fill default values for testing
-    function fillDefaultValues() {
-      document.getElementById('quoteNumber').value = 'QT-2023-001';
-      document.getElementById('projectTitle').value = 'Website Development Services';
-      document.getElementById('projectScope').value = 'Design and development of a responsive business website including homepage, about us, services, and contact pages. Includes basic SEO optimization and contact form setup.';
-      document.getElementById('deliveryTimeline').value = '30-45 days from project commencement';
-      
-      document.getElementById('sellerName').value = 'Webcraft Solutions Pvt Ltd';
-      document.getElementById('sellerGSTIN').value = '27AABCU9603R1ZX';
-      document.getElementById('sellerAddress').value = '123 Business Park, Andheri East\nMumbai, Maharashtra 400069';
-      document.getElementById('sellerContact').value = 'Phone: +91 9876543210\nEmail: contact@webcraftsolutions.com';
-      
-      document.getElementById('clientName').value = 'Global Trading Co.';
-      document.getElementById('clientGSTIN').value = '29AADCB1234H1ZC';
-      document.getElementById('clientAddress').value = '456 Industrial Area, Phase 2\nBangalore, Karnataka 560100';
-      document.getElementById('clientContact').value = 'Phone: +91 9988776655\nEmail: info@globaltradingco.com';
-      
-      document.getElementById('bankName').value = 'HDFC Bank';
-      document.getElementById('accountNumber').value = '50200012345678';
-      document.getElementById('ifscCode').value = 'HDFC0001234';
-      document.getElementById('accountName').value = 'Webcraft Solutions Pvt Ltd';
-      document.getElementById('branchName').value = 'Andheri East, Mumbai';
-      
-      document.getElementById('upiId').value = 'webcraft@hdfcbank';
-      document.getElementById('upiName').value = 'Webcraft Solutions';
-      
-      document.getElementById('termsConditions').value = '1. This quotation is valid for 30 days from the issue date.\n2. 50% advance payment required to commence work.\n3. Delivery timeline starts after receipt of advance payment and required content.\n4. Additional revisions beyond agreed scope will be charged separately.\n5. Final payment due before handover of complete website files.';
-      
-      // Set first item details
-      const firstItemRow = document.querySelector('.item-row');
-      firstItemRow.querySelector('[data-field="description"]').value = 'Website Design & Development';
-      firstItemRow.querySelector('[data-field="hsn"]').value = '998314';
-      firstItemRow.querySelector('[data-field="quantity"]').value = '1';
-      firstItemRow.querySelector('[data-field="rate"]').value = '45000';
-      updateItemAmount(firstItemRow);
-      
-      // Add another item
-      addNewItem();
-      const secondItemRow = document.querySelectorAll('.item-row')[1];
-      secondItemRow.querySelector('[data-field="description"]').value = 'Content Management System Setup';
-      secondItemRow.querySelector('[data-field="hsn"]').value = '998314';
-      secondItemRow.querySelector('[data-field="quantity"]').value = '1';
-      secondItemRow.querySelector('[data-field="rate"]').value = '15000';
-      updateItemAmount(secondItemRow);
-      
-      // Add a third item
-      addNewItem();
-      const thirdItemRow = document.querySelectorAll('.item-row')[2];
-      thirdItemRow.querySelector('[data-field="description"]').value = 'Basic SEO Package';
-      thirdItemRow.querySelector('[data-field="hsn"]').value = '998361';
-      thirdItemRow.querySelector('[data-field="quantity"]').value = '1';
-      thirdItemRow.querySelector('[data-field="rate"]').value = '10000';
-      updateItemAmount(thirdItemRow);
-      
-      // Add discount
-      document.getElementById('discountType').value = 'percentage';
-      document.getElementById('discountValue').value = '5';
-      
-      // Update preview
-      updatePreview();
     }
     
     // Handle clicks outside the modal to close it
