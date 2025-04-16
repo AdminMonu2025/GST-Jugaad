@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<a href="index.html">
-    	<button>Home</button>
-  </a>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Create professional GST-compliant invoices easily with our free online GST Invoice Generator. Download as PDF or image.">
@@ -244,6 +241,36 @@
     .toast.show {
       opacity: 1;
     }
+    
+    /* Home button */
+    .home-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      padding: 10px 16px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+    }
+    
+    .home-button:hover {
+      background-color: var(--secondary-color);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    @media (max-width: 640px) {
+      .home-button {
+        padding: 8px 12px;
+        font-size: 0.875rem;
+      }
+    }
 
     /* Improved responsiveness for mobile */
     @media (max-width: 640px) {
@@ -278,10 +305,19 @@
       .no-print {
         display: none;
       }
+      
+      .home-button {
+        display: none;
+      }
     }
   </style>
 </head>
 <body class="min-h-screen">
+  <!-- Home Button -->
+  <a href="index.html" class="home-button no-print">
+    <i class="fas fa-home mr-2"></i> Home
+  </a>
+  
   <div class="container mx-auto py-4 sm:py-8 px-4">
     <div class="invoice-box p-4 sm:p-8">
       <!-- Header -->
@@ -504,6 +540,7 @@
                 <th class="py-3 px-2 sm:px-4 text-left">Description</th>
                 <th class="py-3 px-2 sm:px-4 text-left">HSN/SAC</th>
                 <th class="py-3 px-2 sm:px-4 text-left">Tax Type</th>
+                <th class="py-3 px-2 sm:px-4 text-left">GST %</th>
                 <th class="py-3 px-2 sm:px-4 text-left">Quantity</th>
                 <th class="py-3 px-2 sm:px-4 text-left">Rate (₹)</th>
                 <th class="py-3 px-2 sm:px-4 text-left">Amount (₹)</th>
@@ -650,6 +687,7 @@
                   <th>Description</th>
                   <th>HSN/SAC</th>
                   <th class="w-16">Qty</th>
+                  <th class="w-16">GST %</th>
                   <th class="w-24">Rate</th>
                   <th class="w-28">Amount</th>
                 </tr>
@@ -764,9 +802,9 @@
     </footer>
   </div>
   
-  <!-- Load scripts at the end for better performance -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+  <!-- Load scripts from jsdelivr for better performance -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   
   <script>
     // Initialize invoice generator
@@ -875,9 +913,6 @@
       
       // Set up event listeners for updates
       setupFormListeners();
-      
-      // Default filling for quick testing
-      fillDefaultValues();
     });
     
     // Toast notification
@@ -942,6 +977,9 @@
             <option value="IGST">IGST</option>
             <option value="Exempt">Exempt</option>
           </select>
+        </td>
+        <td class="py-3 px-2 sm:px-4">
+          <input type="number" class="form-input item-field" data-field="gstRate" value="18" min="0" max="28" step="0.01">
         </td>
         <td class="py-3 px-2 sm:px-4">
           <input type="number" class="form-input item-field" data-field="quantity" value="1" min="1">
@@ -1058,6 +1096,7 @@
         const description = row.querySelector('[data-field="description"]').value || `Item ${index + 1}`;
         const hsn = row.querySelector('[data-field="hsn"]').value || '';
         const taxType = row.querySelector('[data-field="taxType"]').value;
+        const gstRate = parseFloat(row.querySelector('[data-field="gstRate"]').value) || 0;
         const quantity = parseFloat(row.querySelector('[data-field="quantity"]').value) || 0;
         const rate = parseFloat(row.querySelector('[data-field="rate"]').value) || 0;
         const amount = quantity * rate;
@@ -1066,6 +1105,7 @@
           description,
           hsn,
           taxType,
+          gstRate,
           quantity,
           rate,
           amount
@@ -1079,6 +1119,7 @@
           <td class="py-3 px-4">${description}</td>
           <td class="py-3 px-4">${hsn}</td>
           <td class="py-3 px-4">${quantity}</td>
+          <td class="py-3 px-4">${gstRate}%</td>
           <td class="py-3 px-4">₹${rate.toFixed(2)}</td>
           <td class="py-3 px-4">₹${amount.toFixed(2)}</td>
         `;
@@ -1100,26 +1141,53 @@
       discount = Math.min(discount, subtotal);
       const taxableAmount = subtotal - discount;
       
-      // Calculate taxes
-      const cgstRate = parseFloat(document.getElementById('cgstRate').value) || 0;
-      const sgstRate = parseFloat(document.getElementById('sgstRate').value) || 0;
-      const igstRate = parseFloat(document.getElementById('igstRate').value) || 0;
+      // Calculate taxes based on individual item GST rates
+      let totalTax = 0;
+      let taxBreakdown = [];
       
-      let cgstAmount = 0;
-      let sgstAmount = 0;
-      let igstAmount = 0;
+      items.forEach(item => {
+        if (item.taxType !== 'Exempt') {
+          const itemTaxableAmount = item.amount * (taxableAmount / subtotal);
+          const itemTax = itemTaxableAmount * (item.gstRate / 100);
+          totalTax += itemTax;
+          
+          // Store tax info for display
+          if (item.taxType === 'IGST') {
+            const taxInfo = taxBreakdown.find(t => t.type === 'IGST' && t.rate === item.gstRate);
+            if (taxInfo) {
+              taxInfo.amount += itemTax;
+            } else {
+              taxBreakdown.push({ type: 'IGST', rate: item.gstRate, amount: itemTax });
+            }
+          } else if (item.taxType === 'GST') {
+            // For CGST and SGST, split the tax
+            const halfTax = itemTax / 2;
+            
+            const cgstInfo = taxBreakdown.find(t => t.type === 'CGST' && t.rate === item.gstRate / 2);
+            if (cgstInfo) {
+              cgstInfo.amount += halfTax;
+            } else {
+              taxBreakdown.push({ type: 'CGST', rate: item.gstRate / 2, amount: halfTax });
+            }
+            
+            const sgstInfo = taxBreakdown.find(t => t.type === 'SGST' && t.rate === item.gstRate / 2);
+            if (sgstInfo) {
+              sgstInfo.amount += halfTax;
+            } else {
+              taxBreakdown.push({ type: 'SGST', rate: item.gstRate / 2, amount: halfTax });
+            }
+          }
+        }
+      });
+      
+      // Create tax label
       let taxLabel = '';
-      
-      if (items.some(item => item.taxType === 'IGST')) {
-        igstAmount = taxableAmount * (igstRate / 100);
-        taxLabel = `IGST (${igstRate}%)`;
-      } else if (items.some(item => item.taxType === 'GST')) {
-        cgstAmount = taxableAmount * (cgstRate / 100);
-        sgstAmount = taxableAmount * (sgstRate / 100);
-        taxLabel = `CGST (${cgstRate}%) + SGST (${sgstRate}%)`;
+      if (taxBreakdown.length > 0) {
+        taxLabel = taxBreakdown.map(tax => `${tax.type} (${tax.rate}%)`).join(' + ');
+      } else {
+        taxLabel = 'Tax';
       }
       
-      const totalTax = cgstAmount + sgstAmount + igstAmount;
       const totalAmount = taxableAmount + totalTax;
       
       // Update totals
@@ -1180,7 +1248,7 @@
       return result;
     }
     
-    // Generate Image
+    // Generate Image with optimized settings
     function generateImage() {
       const element = document.getElementById('invoice-preview');
       const invoiceNo = document.getElementById('invoiceNumber').value || 'INV-001';
@@ -1191,14 +1259,16 @@
       });
       
       html2canvas(element, {
-        scale: 2,
+        scale: 1.5, // Reduced scale for smaller file size
         useCORS: true,
-        logging: false
+        logging: false,
+        allowTaint: true,
+        backgroundColor: '#ffffff'
       }).then(canvas => {
         // Create download link
         const link = document.createElement('a');
         link.download = `Invoice_${invoiceNo}.png`;
-        link.href = canvas.toDataURL('image/png');
+        link.href = canvas.toDataURL('image/png', 0.8); // Compressed image for smaller file size
         link.click();
         
         // Show buttons again
@@ -1218,7 +1288,7 @@
       });
     }
     
-    // Generate PDF
+    // Generate PDF with optimized settings for smaller file size
     function generatePDF() {
       const element = document.getElementById('invoice-preview');
       const invoiceNo = document.getElementById('invoiceNumber').value || 'INV-001';
@@ -1229,36 +1299,28 @@
       });
       
       html2canvas(element, {
-        scale: 2,
+        scale: 1.5, // Reduced scale for better performance and smaller file size
         useCORS: true,
-        logging: false
+        logging: false,
+        allowTaint: true,
+        backgroundColor: '#ffffff'
       }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
+        const imgData = canvas.toDataURL('image/jpeg', 0.7); // Use JPEG with compression for smaller size
         const pdf = new jspdf.jsPDF({
           orientation: 'portrait',
           unit: 'mm',
-          format: 'a4'
+          format: 'a4',
+          compress: true // Enable compression
         });
         
         const imgWidth = 210; // A4 width in mm
         const pageHeight = 297; // A4 height in mm
         const imgHeight = canvas.height * imgWidth / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
         
-        // Add first page
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+        // Add image to PDF (optimized)
+        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight, undefined, 'FAST');
         
-        // Add additional pages if needed
-        while (heightLeft > 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-        
-        // Save PDF
+        // Save PDF with optimized settings
         pdf.save(`Invoice_${invoiceNo}.pdf`);
         
         // Show buttons again
@@ -1276,55 +1338,6 @@
           item.style.display = '';
         });
       });
-    }
-    
-    // Fill default values for testing
-    function fillDefaultValues() {
-      document.getElementById('invoiceNumber').value = 'INV-2023-001';
-      document.getElementById('sellerName').value = 'ABC Technologies Pvt Ltd';
-      document.getElementById('sellerGSTIN').value = '27AABCU9603R1ZX';
-      document.getElementById('sellerAddress').value = '123 Business Park, Andheri East\nMumbai, Maharashtra 400069';
-      document.getElementById('sellerContact').value = 'Phone: +91 9876543210\nEmail: contact@abctech.com';
-      
-      document.getElementById('customerName').value = 'XYZ Enterprises';
-      document.getElementById('buyerGSTIN').value = '29AADCB1234H1ZC';
-      document.getElementById('customerAddress').value = '456 Industrial Area, Phase 2\nBangalore, Karnataka 560100';
-      document.getElementById('customerContact').value = 'Phone: +91 9988776655\nEmail: info@xyzenterprises.com';
-      
-      document.getElementById('bankName').value = 'HDFC Bank';
-      document.getElementById('accountNumber').value = '50200012345678';
-      document.getElementById('ifscCode').value = 'HDFC0001234';
-      document.getElementById('accountName').value = 'ABC Technologies Pvt Ltd';
-      document.getElementById('branchName').value = 'Andheri East, Mumbai';
-      
-      document.getElementById('upiId').value = 'abctech@hdfcbank';
-      document.getElementById('upiName').value = 'ABC Technologies Pvt Ltd';
-      
-      document.getElementById('notes').value = 'Terms & Conditions:\n1. Payment due as per terms specified above.\n2. Goods once sold will not be taken back or exchanged.';
-      
-      // Set first item details
-      const firstItemRow = document.querySelector('.item-row');
-      firstItemRow.querySelector('[data-field="description"]').value = 'Web Development Services';
-      firstItemRow.querySelector('[data-field="hsn"]').value = '998314';
-      firstItemRow.querySelector('[data-field="quantity"]').value = '1';
-      firstItemRow.querySelector('[data-field="rate"]').value = '25000';
-      updateItemAmount(firstItemRow);
-      
-      // Add another item
-      addNewItem();
-      const secondItemRow = document.querySelectorAll('.item-row')[1];
-      secondItemRow.querySelector('[data-field="description"]').value = 'Mobile App Development';
-      secondItemRow.querySelector('[data-field="hsn"]').value = '998315';
-      secondItemRow.querySelector('[data-field="quantity"]').value = '1';
-      secondItemRow.querySelector('[data-field="rate"]').value = '30000';
-      updateItemAmount(secondItemRow);
-      
-      // Add discount
-      document.getElementById('discountType').value = 'percentage';
-      document.getElementById('discountValue').value = '5';
-      
-      // Update preview
-      updatePreview();
     }
   </script>
 </body>
